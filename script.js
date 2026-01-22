@@ -3,18 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-// App state
-const state = {
-    items: 0,
-    actions: 0,
-    total: 0
-};
-
 // DOM elements
-const actionBtn = document.getElementById('actionBtn');
-const stat1 = document.getElementById('stat1');
-const stat2 = document.getElementById('stat2');
-const stat3 = document.getElementById('stat3');
 const resetViewBtn = document.getElementById('resetViewBtn');
 const fullscreenBtn = document.getElementById('fullscreenBtn');
 const modelViewer = document.getElementById('modelViewer');
@@ -24,65 +13,21 @@ let scene, camera, renderer, controls, currentModel = null;
 
 // Initialize the app
 function init() {
-    updateStats();
     setupEventListeners();
     init3DViewer();
 }
 
-// Update statistics display
-function updateStats() {
-    stat1.textContent = state.items;
-    stat2.textContent = state.actions;
-    stat3.textContent = state.total;
-    
-    // Add animation
-    [stat1, stat2, stat3].forEach(stat => {
-        stat.style.transform = 'scale(1.2)';
-        setTimeout(() => {
-            stat.style.transform = 'scale(1)';
-        }, 200);
-    });
-}
-
-
-// Handle button click
-function handleAction() {
-    state.items += Math.floor(Math.random() * 5) + 1;
-    state.actions += 1;
-    state.total = state.items + state.actions;
-    
-    updateStats();
-    
-    // Button animation
-    actionBtn.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-        actionBtn.style.transform = 'scale(1)';
-    }, 100);
-}
-
 // Setup event listeners
 function setupEventListeners() {
-    actionBtn.addEventListener('click', handleAction);
-    
     // 3D Model controls
     resetViewBtn.addEventListener('click', resetCamera);
     fullscreenBtn.addEventListener('click', toggleFullscreen);
     
     // Keyboard support
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            handleAction();
-        }
         if (e.key === 'f' || e.key === 'F') {
             toggleFullscreen();
         }
-    });
-    
-    // Touch support for large displays
-    actionBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        handleAction();
     });
 }
 
@@ -322,24 +267,9 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-// Auto-update stats every 5 seconds (demo)
-let autoUpdateInterval;
-function startAutoUpdate() {
-    autoUpdateInterval = setInterval(() => {
-        if (Math.random() > 0.7) {
-            state.items += Math.floor(Math.random() * 3);
-            state.total = state.items + state.actions;
-            updateStats();
-        }
-    }, 5000);
-}
-
 // Initialize when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
 } else {
     init();
 }
-
-// Optional: Start auto-update (can be disabled)
-// startAutoUpdate();
