@@ -217,9 +217,10 @@ function toggleFullscreen() {
         if (appContainer.requestFullscreen) {
             appContainer.requestFullscreen().then(() => {
                 fullscreenBtn.textContent = 'Exit Fullscreen';
-                // Update renderer size when entering fullscreen
+                // Update renderer size and center model when entering fullscreen
                 setTimeout(() => {
                     onWindowResize();
+                    centerModelInViewport();
                 }, 100);
             }).catch(err => {
                 console.error('Error entering fullscreen:', err);
@@ -229,10 +230,18 @@ function toggleFullscreen() {
             // Safari support
             appContainer.webkitRequestFullscreen();
             fullscreenBtn.textContent = 'Exit Fullscreen';
+            setTimeout(() => {
+                onWindowResize();
+                centerModelInViewport();
+            }, 100);
         } else if (appContainer.msRequestFullscreen) {
             // IE/Edge support
             appContainer.msRequestFullscreen();
             fullscreenBtn.textContent = 'Exit Fullscreen';
+            setTimeout(() => {
+                onWindowResize();
+                centerModelInViewport();
+            }, 100);
         }
     } else {
         // Exit fullscreen
@@ -246,16 +255,51 @@ function toggleFullscreen() {
         } else if (document.webkitExitFullscreen) {
             document.webkitExitFullscreen();
             fullscreenBtn.textContent = 'Fullscreen';
+            setTimeout(() => {
+                onWindowResize();
+            }, 100);
         } else if (document.msExitFullscreen) {
             document.msExitFullscreen();
             fullscreenBtn.textContent = 'Fullscreen';
+            setTimeout(() => {
+                onWindowResize();
+            }, 100);
         }
+    }
+}
+
+// Center the model in the viewport
+function centerModelInViewport() {
+    if (currentModel) {
+        const box = new THREE.Box3().setFromObject(currentModel);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z);
+        
+        // Center the model at origin
+        currentModel.position.x = -center.x;
+        currentModel.position.y = -center.y;
+        currentModel.position.z = -center.z;
+        
+        // Position camera to view the centered model
+        camera.position.set(0, 0, maxDim * 2);
+        camera.lookAt(0, 0, 0);
+        
+        controls.target.set(0, 0, 0);
+        controls.update();
     }
 }
 
 // Listen for fullscreen changes
 document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement) {
+    if (document.fullscreenElement) {
+        // Entered fullscreen
+        setTimeout(() => {
+            onWindowResize();
+            centerModelInViewport();
+        }, 100);
+    } else {
+        // Exited fullscreen
         fullscreenBtn.textContent = 'Fullscreen';
         setTimeout(() => {
             onWindowResize();
@@ -264,7 +308,14 @@ document.addEventListener('fullscreenchange', () => {
 });
 
 document.addEventListener('webkitfullscreenchange', () => {
-    if (!document.webkitFullscreenElement) {
+    if (document.webkitFullscreenElement) {
+        // Entered fullscreen
+        setTimeout(() => {
+            onWindowResize();
+            centerModelInViewport();
+        }, 100);
+    } else {
+        // Exited fullscreen
         fullscreenBtn.textContent = 'Fullscreen';
         setTimeout(() => {
             onWindowResize();
@@ -273,7 +324,14 @@ document.addEventListener('webkitfullscreenchange', () => {
 });
 
 document.addEventListener('msfullscreenchange', () => {
-    if (!document.msFullscreenElement) {
+    if (document.msFullscreenElement) {
+        // Entered fullscreen
+        setTimeout(() => {
+            onWindowResize();
+            centerModelInViewport();
+        }, 100);
+    } else {
+        // Exited fullscreen
         fullscreenBtn.textContent = 'Fullscreen';
         setTimeout(() => {
             onWindowResize();

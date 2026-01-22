@@ -44,18 +44,225 @@ body {
     width: 100vw;
     height: 100vh;
     margin: 0;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.app-container:fullscreen .header,
+.app-container:fullscreen .footer,
+.app-container:fullscreen .card:not(.card-fullscreen) {
+    display: none;
+}
+
+.app-container:fullscreen .main-content {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container:fullscreen .dashboard-section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container:fullscreen .card {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+}
+
+.app-container:fullscreen .model-viewer-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.app-container:fullscreen .model-viewer {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+
+.app-container:fullscreen .model-controls {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.app-container:fullscreen .model-hint {
+    display: none;
 }
 
 .app-container:-webkit-full-screen {
     width: 100vw;
     height: 100vh;
     margin: 0;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.app-container:-webkit-full-screen .header,
+.app-container:-webkit-full-screen .footer,
+.app-container:-webkit-full-screen .card:not(.card-fullscreen) {
+    display: none;
+}
+
+.app-container:-webkit-full-screen .main-content {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container:-webkit-full-screen .dashboard-section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container:-webkit-full-screen .card {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+}
+
+.app-container:-webkit-full-screen .model-viewer-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.app-container:-webkit-full-screen .model-viewer {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+
+.app-container:-webkit-full-screen .model-controls {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.app-container:-webkit-full-screen .model-hint {
+    display: none;
 }
 
 .app-container:-ms-fullscreen {
     width: 100vw;
     height: 100vh;
     margin: 0;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.app-container:-ms-fullscreen .header,
+.app-container:-ms-fullscreen .footer,
+.app-container:-ms-fullscreen .card:not(.card-fullscreen) {
+    display: none;
+}
+
+.app-container:-ms-fullscreen .main-content {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container:-ms-fullscreen .dashboard-section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container:-ms-fullscreen .card {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+}
+
+.app-container:-ms-fullscreen .model-viewer-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.app-container:-ms-fullscreen .model-viewer {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+
+.app-container:-ms-fullscreen .model-controls {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.app-container:-ms-fullscreen .model-hint {
+    display: none;
 }
 
 /* Custom scrollbar */
