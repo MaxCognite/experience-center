@@ -217,10 +217,9 @@ function toggleFullscreen() {
         if (appContainer.requestFullscreen) {
             appContainer.requestFullscreen().then(() => {
                 fullscreenBtn.textContent = 'Exit Fullscreen';
-                // Update renderer size and center model when entering fullscreen
+                // Update renderer size when entering fullscreen
                 setTimeout(() => {
                     onWindowResize();
-                    centerModelInViewport();
                 }, 100);
             }).catch(err => {
                 console.error('Error entering fullscreen:', err);
@@ -232,7 +231,6 @@ function toggleFullscreen() {
             fullscreenBtn.textContent = 'Exit Fullscreen';
             setTimeout(() => {
                 onWindowResize();
-                centerModelInViewport();
             }, 100);
         } else if (appContainer.msRequestFullscreen) {
             // IE/Edge support
@@ -240,7 +238,6 @@ function toggleFullscreen() {
             fullscreenBtn.textContent = 'Exit Fullscreen';
             setTimeout(() => {
                 onWindowResize();
-                centerModelInViewport();
             }, 100);
         }
     } else {
@@ -268,35 +265,12 @@ function toggleFullscreen() {
     }
 }
 
-// Center the model in the viewport
-function centerModelInViewport() {
-    if (currentModel) {
-        const box = new THREE.Box3().setFromObject(currentModel);
-        const center = box.getCenter(new THREE.Vector3());
-        const size = box.getSize(new THREE.Vector3());
-        const maxDim = Math.max(size.x, size.y, size.z);
-        
-        // Center the model at origin
-        currentModel.position.x = -center.x;
-        currentModel.position.y = -center.y;
-        currentModel.position.z = -center.z;
-        
-        // Position camera to view the centered model
-        camera.position.set(0, 0, maxDim * 2);
-        camera.lookAt(0, 0, 0);
-        
-        controls.target.set(0, 0, 0);
-        controls.update();
-    }
-}
-
 // Listen for fullscreen changes
 document.addEventListener('fullscreenchange', () => {
     if (document.fullscreenElement) {
         // Entered fullscreen
         setTimeout(() => {
             onWindowResize();
-            centerModelInViewport();
         }, 100);
     } else {
         // Exited fullscreen
@@ -312,7 +286,6 @@ document.addEventListener('webkitfullscreenchange', () => {
         // Entered fullscreen
         setTimeout(() => {
             onWindowResize();
-            centerModelInViewport();
         }, 100);
     } else {
         // Exited fullscreen
@@ -328,7 +301,6 @@ document.addEventListener('msfullscreenchange', () => {
         // Entered fullscreen
         setTimeout(() => {
             onWindowResize();
-            centerModelInViewport();
         }, 100);
     } else {
         // Exited fullscreen

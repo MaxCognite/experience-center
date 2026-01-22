@@ -50,8 +50,7 @@ body {
 }
 
 .app-container:fullscreen .header,
-.app-container:fullscreen .footer,
-.app-container:fullscreen .card:not(.card-fullscreen) {
+.app-container:fullscreen .footer {
     display: none;
 }
 
@@ -73,6 +72,14 @@ body {
 }
 
 .app-container:fullscreen .card {
+    display: none;
+}
+
+.app-container:fullscreen .card:has(.model-viewer-container) {
+    display: flex;
+}
+
+.app-container:fullscreen .card {
     width: 100%;
     height: 100%;
     padding: 0;
@@ -83,6 +90,11 @@ body {
     justify-content: center;
     align-items: center;
     background: #000;
+    border: none;
+}
+
+.app-container:fullscreen .card h2 {
+    display: none;
 }
 
 .app-container:fullscreen .model-viewer-container {
@@ -93,6 +105,7 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0;
+    position: relative;
 }
 
 .app-container:fullscreen .model-viewer {
@@ -125,8 +138,7 @@ body {
 }
 
 .app-container:-webkit-full-screen .header,
-.app-container:-webkit-full-screen .footer,
-.app-container:-webkit-full-screen .card:not(.card-fullscreen) {
+.app-container:-webkit-full-screen .footer {
     display: none;
 }
 
@@ -148,6 +160,14 @@ body {
 }
 
 .app-container:-webkit-full-screen .card {
+    display: none;
+}
+
+.app-container:-webkit-full-screen .card:has(.model-viewer-container) {
+    display: flex;
+}
+
+.app-container:-webkit-full-screen .card {
     width: 100%;
     height: 100%;
     padding: 0;
@@ -158,6 +178,11 @@ body {
     justify-content: center;
     align-items: center;
     background: #000;
+    border: none;
+}
+
+.app-container:-webkit-full-screen .card h2 {
+    display: none;
 }
 
 .app-container:-webkit-full-screen .model-viewer-container {
@@ -168,6 +193,7 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0;
+    position: relative;
 }
 
 .app-container:-webkit-full-screen .model-viewer {
@@ -200,8 +226,7 @@ body {
 }
 
 .app-container:-ms-fullscreen .header,
-.app-container:-ms-fullscreen .footer,
-.app-container:-ms-fullscreen .card:not(.card-fullscreen) {
+.app-container:-ms-fullscreen .footer {
     display: none;
 }
 
@@ -223,6 +248,14 @@ body {
 }
 
 .app-container:-ms-fullscreen .card {
+    display: none;
+}
+
+.app-container:-ms-fullscreen .card:has(.model-viewer-container) {
+    display: flex;
+}
+
+.app-container:-ms-fullscreen .card {
     width: 100%;
     height: 100%;
     padding: 0;
@@ -233,6 +266,11 @@ body {
     justify-content: center;
     align-items: center;
     background: #000;
+    border: none;
+}
+
+.app-container:-ms-fullscreen .card h2 {
+    display: none;
 }
 
 .app-container:-ms-fullscreen .model-viewer-container {
@@ -243,6 +281,7 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0;
+    position: relative;
 }
 
 .app-container:-ms-fullscreen .model-viewer {
