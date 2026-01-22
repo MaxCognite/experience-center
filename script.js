@@ -211,109 +211,75 @@ function loadGLBModelFromPath(path) {
 // Toggle fullscreen mode
 function toggleFullscreen() {
     if (!document.fullscreenElement) {
-        // Enter fullscreen
-        const fullscreenContainer = document.createElement('div');
-        fullscreenContainer.id = 'fullscreenContainer';
-        fullscreenContainer.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 1080px;
-            height: 1920px;
-            background: #000;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        `;
+        // Enter fullscreen - request fullscreen on the document element
+        const appContainer = document.querySelector('.app-container');
         
-        const fullscreenViewer = document.createElement('div');
-        fullscreenViewer.id = 'fullscreenViewer';
-        fullscreenViewer.style.cssText = `
-            width: 1080px;
-            height: 1920px;
-            position: relative;
-        `;
-        
-        fullscreenContainer.appendChild(fullscreenViewer);
-        document.body.appendChild(fullscreenContainer);
-        
-        // Create new renderer for fullscreen
-        const fullscreenRenderer = new THREE.WebGLRenderer({ antialias: true });
-        fullscreenRenderer.setSize(1080, 1920);
-        fullscreenRenderer.setPixelRatio(window.devicePixelRatio);
-        fullscreenViewer.appendChild(fullscreenRenderer.domElement);
-        
-        // Update camera aspect
-        camera.aspect = 1080 / 1920;
-        camera.updateProjectionMatrix();
-        
-        // Create fullscreen controls
-        const fullscreenControls = new OrbitControls(camera, fullscreenRenderer.domElement);
-        fullscreenControls.enableDamping = true;
-        fullscreenControls.dampingFactor = 0.05;
-        fullscreenControls.minDistance = 1;
-        fullscreenControls.maxDistance = 20;
-        fullscreenControls.target.copy(controls.target);
-        fullscreenControls.update();
-        
-        // Store fullscreen state
-        window.fullscreenState = {
-            container: fullscreenContainer,
-            renderer: fullscreenRenderer,
-            controls: fullscreenControls,
-            originalControls: controls,
-            originalRenderer: renderer
-        };
-        
-        // Animation loop for fullscreen
-        function fullscreenAnimate() {
-            if (window.fullscreenState) {
-                requestAnimationFrame(fullscreenAnimate);
-                
-                // Slowly rotate the model if it exists
-                if (currentModel) {
-                    currentModel.rotation.y += 0.002; // Very slow rotation
-                }
-                
-                fullscreenControls.update();
-                fullscreenRenderer.render(scene, camera);
-            }
+        if (appContainer.requestFullscreen) {
+            appContainer.requestFullscreen().then(() => {
+                fullscreenBtn.textContent = 'Exit Fullscreen';
+                // Update renderer size when entering fullscreen
+                setTimeout(() => {
+                    onWindowResize();
+                }, 100);
+            }).catch(err => {
+                console.error('Error entering fullscreen:', err);
+                addActivity('Error entering fullscreen');
+            });
+        } else if (appContainer.webkitRequestFullscreen) {
+            // Safari support
+            appContainer.webkitRequestFullscreen();
+            fullscreenBtn.textContent = 'Exit Fullscreen';
+        } else if (appContainer.msRequestFullscreen) {
+            // IE/Edge support
+            appContainer.msRequestFullscreen();
+            fullscreenBtn.textContent = 'Exit Fullscreen';
         }
-        fullscreenAnimate();
-        
-        // Exit fullscreen on ESC or click outside
-        const exitFullscreen = () => {
-            if (window.fullscreenState) {
-                document.body.removeChild(window.fullscreenState.container);
-                camera.aspect = modelViewer.clientWidth / modelViewer.clientHeight;
-                camera.updateProjectionMatrix();
-                controls = window.fullscreenState.originalControls;
-                renderer = window.fullscreenState.originalRenderer;
-                window.fullscreenState = null;
-                animate(); // Restart original animation
-            }
-        };
-        
-        fullscreenContainer.addEventListener('click', (e) => {
-            if (e.target === fullscreenContainer) {
-                exitFullscreen();
-            }
-        });
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && window.fullscreenState) {
-                exitFullscreen();
-            }
-        }, { once: true });
-        
-        fullscreenBtn.textContent = 'Exit Fullscreen';
     } else {
-        // Exit fullscreen (if using native fullscreen API)
-        document.exitFullscreen();
+        // Exit fullscreen
+        if (document.exitFullscreen) {
+            document.exitFullscreen().then(() => {
+                fullscreenBtn.textContent = 'Fullscreen';
+                setTimeout(() => {
+                    onWindowResize();
+                }, 100);
+            });
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+            fullscreenBtn.textContent = 'Fullscreen';
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+            fullscreenBtn.textContent = 'Fullscreen';
+        }
     }
 }
+
+// Listen for fullscreen changes
+document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) {
+        fullscreenBtn.textContent = 'Fullscreen';
+        setTimeout(() => {
+            onWindowResize();
+        }, 100);
+    }
+});
+
+document.addEventListener('webkitfullscreenchange', () => {
+    if (!document.webkitFullscreenElement) {
+        fullscreenBtn.textContent = 'Fullscreen';
+        setTimeout(() => {
+            onWindowResize();
+        }, 100);
+    }
+});
+
+document.addEventListener('msfullscreenchange', () => {
+    if (!document.msFullscreenElement) {
+        fullscreenBtn.textContent = 'Fullscreen';
+        setTimeout(() => {
+            onWindowResize();
+        }, 100);
+    }
+});
 
 // Reset camera view
 function resetCamera() {
@@ -326,17 +292,13 @@ function resetCamera() {
         camera.position.set(0, 0, maxDim * 2);
         camera.lookAt(0, 0, 0);
         
-        // Update controls (handle both regular and fullscreen)
-        const activeControls = window.fullscreenState ? window.fullscreenState.controls : controls;
-        activeControls.target.set(0, 0, 0);
-        activeControls.update();
+        controls.target.set(0, 0, 0);
+        controls.update();
     } else {
         camera.position.set(0, 0, 5);
         camera.lookAt(0, 0, 0);
-        
-        const activeControls = window.fullscreenState ? window.fullscreenState.controls : controls;
-        activeControls.target.set(0, 0, 0);
-        activeControls.update();
+        controls.target.set(0, 0, 0);
+        controls.update();
     }
 }
 
@@ -345,9 +307,11 @@ function onWindowResize() {
     const width = modelViewer.clientWidth;
     const height = modelViewer.clientHeight;
     
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-    renderer.setSize(width, height);
+    if (width > 0 && height > 0) {
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+    }
 }
 
 // Animation loop

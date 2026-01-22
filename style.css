@@ -39,6 +39,25 @@ body {
     overflow-x: hidden;
 }
 
+/* Fullscreen styles */
+.app-container:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+.app-container:-webkit-full-screen {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+.app-container:-ms-fullscreen {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
 /* Custom scrollbar */
 .app-container::-webkit-scrollbar {
     width: 12px;
