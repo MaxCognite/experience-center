@@ -7,8 +7,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const state = {
     items: 0,
     actions: 0,
-    total: 0,
-    activities: ['App initialized']
+    total: 0
 };
 
 // DOM elements
@@ -16,7 +15,6 @@ const actionBtn = document.getElementById('actionBtn');
 const stat1 = document.getElementById('stat1');
 const stat2 = document.getElementById('stat2');
 const stat3 = document.getElementById('stat3');
-const activityList = document.getElementById('activityList');
 const resetViewBtn = document.getElementById('resetViewBtn');
 const fullscreenBtn = document.getElementById('fullscreenBtn');
 const modelViewer = document.getElementById('modelViewer');
@@ -27,10 +25,8 @@ let scene, camera, renderer, controls, currentModel = null;
 // Initialize the app
 function init() {
     updateStats();
-    renderActivities();
     setupEventListeners();
     init3DViewer();
-    addActivity('App ready');
 }
 
 // Update statistics display
@@ -48,25 +44,6 @@ function updateStats() {
     });
 }
 
-// Add activity to the feed
-function addActivity(message) {
-    const timestamp = new Date().toLocaleTimeString();
-    state.activities.unshift(`[${timestamp}] ${message}`);
-    
-    // Keep only last 10 activities
-    if (state.activities.length > 10) {
-        state.activities.pop();
-    }
-    
-    renderActivities();
-}
-
-// Render activities list
-function renderActivities() {
-    activityList.innerHTML = state.activities
-        .map(activity => `<div class="activity-item">${activity}</div>`)
-        .join('');
-}
 
 // Handle button click
 function handleAction() {
@@ -75,7 +52,6 @@ function handleAction() {
     state.total = state.items + state.actions;
     
     updateStats();
-    addActivity(`Action performed: +${state.items - (state.items - (Math.floor(Math.random() * 5) + 1))} items`);
     
     // Button animation
     actionBtn.style.transform = 'scale(0.95)';
@@ -154,15 +130,11 @@ function init3DViewer() {
     
     // Auto-load foo.glb
     loadGLBModelFromPath('foo.glb');
-    
-    addActivity('3D viewer initialized');
 }
 
 // Load GLB/GLTF model from file path
 function loadGLBModelFromPath(path) {
     const loader = new GLTFLoader();
-    
-    addActivity(`Loading model: ${path}`);
     
     loader.load(
         path,
@@ -192,18 +164,12 @@ function loadGLBModelFromPath(path) {
             
             // Reset camera
             resetCamera();
-            
-            addActivity(`Model loaded: ${path}`);
         },
         (progress) => {
-            if (progress.total > 0) {
-                const percent = (progress.loaded / progress.total * 100).toFixed(1);
-                addActivity(`Loading: ${percent}%`);
-            }
+            // Progress tracking (silent)
         },
         (error) => {
             console.error('Error loading model:', error);
-            addActivity(`Error loading model: ${error.message}`);
         }
     );
 }
@@ -223,7 +189,6 @@ function toggleFullscreen() {
                 }, 100);
             }).catch(err => {
                 console.error('Error entering fullscreen:', err);
-                addActivity('Error entering fullscreen');
             });
         } else if (appContainer.webkitRequestFullscreen) {
             // Safari support
@@ -365,7 +330,6 @@ function startAutoUpdate() {
             state.items += Math.floor(Math.random() * 3);
             state.total = state.items + state.actions;
             updateStats();
-            addActivity('Auto-update: Items increased');
         }
     }, 5000);
 }
