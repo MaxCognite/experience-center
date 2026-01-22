@@ -260,7 +260,7 @@ function animate() {
     
     // Slowly rotate the model if it exists
     if (currentModel) {
-        currentModel.rotation.y += 0.002; // Very slow rotation (about 1 full rotation per ~52 seconds)
+        currentModel.rotation.y += 0.0024; // Slow rotation (about 1 full rotation per ~43 seconds)
     }
     
     controls.update();
