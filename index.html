@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience Center</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <h1 class="title">Experience Center</h1>
+            <p class="subtitle">Optimized for Large Vertical Display</p>
+        </header>
+
+        <main class="main-content">
+            <section class="dashboard-section">
+                <div class="card">
+                    <h2>Welcome</h2>
+                    <p>This app is optimized for a 1080x1920 portrait display.</p>
+                    <button class="btn btn-primary" id="actionBtn">Click Me</button>
+                </div>
+
+                <div class="card">
+                    <h2>Stats</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="stat1">0</div>
+                            <div class="stat-label">Items</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="stat2">0</div>
+                            <div class="stat-label">Actions</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="stat3">0</div>
+                            <div class="stat-label">Total</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>3D Model Viewer</h2>
+                    <div class="model-viewer-container">
+                        <div id="modelViewer" class="model-viewer"></div>
+                        <div class="model-controls">
+                            <button class="btn btn-secondary" id="resetViewBtn">Reset View</button>
+                            <button class="btn btn-primary" id="fullscreenBtn">Fullscreen</button>
+                        </div>
+                        <p class="model-hint">Use mouse/touch to rotate, zoom, and pan the 3D model.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Activity Feed</h2>
+                    <div class="activity-list" id="activityList">
+                        <div class="activity-item">App initialized</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Experience Center</p>
+        </footer>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary-color: #8b5cf6;
+    --background: #0f172a;
+    --surface: #1e293b;
+    --surface-light: #334155;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --accent: #10b981;
+    --border: #475569;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--background);
+    color: var(--text-primary);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+.app-container {
+    width: 1080px;
+    height: 1920px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, var(--background) 0%, #1a1f3a 100%);
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+.app-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.app-container::-webkit-scrollbar-track {
+    background: var(--surface);
+}
+
+.app-container::-webkit-scrollbar-thumb {
+    background: var(--surface-light);
+    border-radius: 6px;
+}
+
+.app-container::-webkit-scrollbar-thumb:hover {
+    background: var(--border);
+}
+
+.header {
+    padding: 60px 80px 40px;
+    text-align: center;
+    background: linear-gradient(180deg, var(--surface) 0%, transparent 100%);
+    border-bottom: 1px solid var(--border);
+}
+
+.title {
+    font-size: 72px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 28px;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+.main-content {
+    flex: 1;
+    padding: 60px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.dashboard-section {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.card {
+    background: var(--surface);
+    border-radius: 24px;
+    padding: 50px;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 48px var(--shadow);
+}
+
+.card h2 {
+    font-size: 42px;
+    margin-bottom: 30px;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.card p {
+    font-size: 24px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.btn {
+    padding: 20px 50px;
+    font-size: 24px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(99, 102, 241, 0.6);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: var(--surface-light);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--border);
+    transform: translateY(-2px);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 30px;
+    background: var(--surface-light);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+}
+
+.stat-value {
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 12px;
+    transition: transform 0.3s ease;
+}
+
+.stat-item:hover .stat-value {
+    transform: scale(1.1);
+}
+
+.stat-label {
+    font-size: 20px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.activity-list {
+    max-height: 600px;
+    overflow-y: auto;
+    margin-top: 20px;
+}
+
+.activity-item {
+    padding: 24px;
+    margin-bottom: 16px;
+    background: var(--surface-light);
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+    font-size: 20px;
+    color: var(--text-primary);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.footer {
+    padding: 40px 80px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: 18px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 1080px) {
+    .app-container {
+        width: 100%;
+        height: 100vh;
+    }
+}
+
+@media (max-height: 1920px) {
+    .app-container {
+        height: 100vh;
+    }
+}
+
+/* 3D Model Viewer Styles */
+.model-viewer-container {
+    margin-top: 20px;
+}
+
+.model-viewer {
+    width: 100%;
+    height: 600px;
+    background: var(--surface-light);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.model-viewer canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.model-controls {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.model-hint {
+    font-size: 18px;
+    color: var(--text-secondary);
+    font-style: italic;
+    line-height: 1.5;
+}
