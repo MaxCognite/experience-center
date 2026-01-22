@@ -117,11 +117,7 @@ body {
 }
 
 .app-container:fullscreen .model-controls {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
+    display: none;
 }
 
 .app-container:fullscreen .model-hint {
@@ -205,11 +201,7 @@ body {
 }
 
 .app-container:-webkit-full-screen .model-controls {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
+    display: none;
 }
 
 .app-container:-webkit-full-screen .model-hint {
@@ -293,11 +285,7 @@ body {
 }
 
 .app-container:-ms-fullscreen .model-controls {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
+    display: none;
 }
 
 .app-container:-ms-fullscreen .model-hint {
